@@ -139,11 +139,11 @@ for _, row in filtered.iterrows():
                 </div>
             """, unsafe_allow_html=True)
 
-        prev, _, next_ = st.columns([1, 6, 1])
-        with prev:
+        nav1, nav2 = st.columns([1, 1])
+        with nav1:
             if st.button("◀", key=f"prev_{img_key}"):
                 st.session_state[img_key] = (st.session_state[img_key] - 1) % len(row["images"])
-        with next_:
+        with nav2:
             if st.button("▶", key=f"next_{img_key}"):
                 st.session_state[img_key] = (st.session_state[img_key] + 1) % len(row["images"])
 
@@ -151,7 +151,6 @@ for _, row in filtered.iterrows():
         image_bytes = fetch_image_from_url(img_url)
         img = load_image_corrected(BytesIO(image_bytes))
         st.image(img, use_container_width=True)
-
 
     with col2:
         st.subheader(f"Product Code: {code}")
