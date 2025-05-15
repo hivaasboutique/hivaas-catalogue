@@ -172,15 +172,21 @@ for _, row in filtered.iterrows():
 
         # WhatsApp Button
         num = "918073879674"
-        if st.button("📲 Send to WhatsApp", key=f"wa_btn_{code}", disabled=disabled):
-            if selected:
-                msg = f"Hi, I'm interested in Product Code: {code} - {row['description']}. Sizes: {', '.join(selected)}"
-                wa_url = f"https://wa.me/{num}?text={urllib.parse.quote(msg)}"
-                st.markdown(f'<a href="{wa_url}" target="_blank" style="text-decoration:none;">'
-                            f'<button style="background-color:#25D366;color:white;padding:8px 12px;border:none;border-radius:4px;cursor:pointer;">📲 Send to WhatsApp</button></a>', 
-                            unsafe_allow_html=True)
-            else:
-                st.warning("⚠️ Please select the sizes in which you want this product.")
+        msg = f"Hi, I'm interested in Product Code: {code} - {row['description']}. Sizes: {', '.join(selected)}"
+        wa_url = f"https://wa.me/{num}?text={urllib.parse.quote(msg)}"
+
+        if selected and not disabled:
+            st.markdown(
+                f'<a href="{wa_url}" target="_blank" style="text-decoration:none;">'
+                f'<button style="background-color:#25D366;color:white;padding:8px 12px;border:none;border-radius:4px;cursor:pointer;">📲 Send to WhatsApp</button></a>',
+                unsafe_allow_html=True
+            )
+        elif disabled:
+            st.button("📲 Send to WhatsApp", disabled=True)
+        else:
+            st.warning("⚠️ Please select the sizes in which you want this product before sending it to us on Whatsapp.")
+            st.button("📲 Send to WhatsApp", disabled=True)
+
 
 
         # Wishlist Button
