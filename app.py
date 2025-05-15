@@ -139,11 +139,11 @@ for _, row in filtered.iterrows():
                 </div>
             """, unsafe_allow_html=True)
 
-        nav1, nav2 = st.columns([1, 1])
-        with nav1:
+        prev, _, next_ = st.columns([1, 3, 1])
+        with prev:
             if st.button("◀", key=f"prev_{img_key}"):
                 st.session_state[img_key] = (st.session_state[img_key] - 1) % len(row["images"])
-        with nav2:
+        with next_:
             if st.button("▶", key=f"next_{img_key}"):
                 st.session_state[img_key] = (st.session_state[img_key] + 1) % len(row["images"])
 
