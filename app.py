@@ -110,18 +110,22 @@ for _, row in filtered.iterrows():
         st.write(f"**Price:** ₹{row['price']}")
         st.write(f"**Product Type:** {row['type']}")
 
-        st.markdown("**Select Sizes:**")
+        # Sizes
         selected = []
-        for size, available in sizes.items():
-            cb_key = f"{code}_size_{size}"
-            checked = st.checkbox(label=size, key=cb_key, disabled=not available)
-            if checked:
-                selected.append(size)
+        if row["in_stock"]:
+            st.markdown("**Select Sizes:**")
+            for size, available in sizes.items():
+                cb_key = f"{code}_size_{size}"
+                checked = st.checkbox(label=size, key=cb_key, disabled=not available)
+                if checked:
+                    selected.append(size)
+        else:
+            st.caption("❌ This product is sold out. Sizes are not selectable.")
         st.session_state[f"{code}_selected_sizes"] = selected
 
-        # WhatsApp
+        # WhatsApp Button (disabled if sold out)
         num = "918073879674"
-        if st.button("📲 Send to WhatsApp", key=f"wa_btn_{code}"):
+        if st.button("📲 Send to WhatsApp", key=f"wa_btn_{code}", disabled=not row["in_stock"]):
             if selected:
                 msg = f"Hi, I'm interested in Product Code: {code} - {row['description']}. Sizes: {', '.join(selected)}"
                 wa_url = f"https://wa.me/{num}?text={urllib.parse.quote(msg)}"
@@ -129,10 +133,10 @@ for _, row in filtered.iterrows():
             else:
                 st.warning("⚠️ Please select the sizes in which you want this product.")
 
-        # Wishlist
+        # Wishlist Button (disabled if sold out)
         in_wishlist = code in st.session_state["wishlist"]
         btn_label = "❌ Remove from Wishlist" if in_wishlist else "❤️ Add to Wishlist"
-        if st.button(btn_label, key=f"wl_{code}"):
+        if st.button(btn_label, key=f"wl_{code}", disabled=not row["in_stock"]):
             if selected:
                 if in_wishlist:
                     del st.session_state["wishlist"][code]
