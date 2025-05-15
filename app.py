@@ -176,9 +176,12 @@ for _, row in filtered.iterrows():
             if selected:
                 msg = f"Hi, I'm interested in Product Code: {code} - {row['description']}. Sizes: {', '.join(selected)}"
                 wa_url = f"https://wa.me/{num}?text={urllib.parse.quote(msg)}"
-                st.markdown(f'<meta http-equiv="refresh" content="0; url={wa_url}" />', unsafe_allow_html=True)
+                st.markdown(f'<a href="{wa_url}" target="_blank" style="text-decoration:none;">'
+                            f'<button style="background-color:#25D366;color:white;padding:8px 12px;border:none;border-radius:4px;cursor:pointer;">📲 Send to WhatsApp</button></a>', 
+                            unsafe_allow_html=True)
             else:
                 st.warning("⚠️ Please select the sizes in which you want this product.")
+
 
         # Wishlist Button
         in_wishlist = code in st.session_state["wishlist"]
