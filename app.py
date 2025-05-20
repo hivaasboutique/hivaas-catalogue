@@ -32,7 +32,7 @@ def load_image_corrected(path):
 
 # ------------------- Load product data -------------------
 
-df = pd.read_excel("dummy1.xlsx")
+df = pd.read_excel("hivaasproductinventory.xlsx")
 
 def parse_json_safe(val):
     if isinstance(val, str):
@@ -40,7 +40,7 @@ def parse_json_safe(val):
     return {}
 
 df["sizes"] = df["sizes"].apply(parse_json_safe)
-df["images"] = df.apply(lambda row: [row[col] for col in ["image1", "image2", "image3", "image4"] if pd.notna(row[col])], axis=1)
+df["images"] = df.apply(lambda row: [row[col] for col in ["image1", "image2", "image3", "image4", "image5"] if pd.notna(row[col])], axis=1)
 
 # ------------------- Session state initialization -------------------
 
