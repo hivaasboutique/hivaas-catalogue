@@ -237,10 +237,11 @@ else:
                     unsafe_allow_html=True
                 )
             elif disabled:
-                st.button("📲 Send to WhatsApp", disabled=True)
+                st.button("📲 Send to WhatsApp", disabled=True, key=f"whatsapp_{code}")
+
             else:
                 st.warning("⚠️ Please select the sizes in which you want this product before sending it to us on Whatsapp.")
-                st.button("📲 Send to WhatsApp", disabled=True)
+                st.button("📲 Send to WhatsApp", disabled=True, key=f"whatsapp_{code}")
 
             # Wishlist Button
             in_wishlist = code in st.session_state["wishlist"]
